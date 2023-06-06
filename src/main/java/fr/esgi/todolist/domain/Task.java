@@ -14,28 +14,28 @@ public class Task {
     State state;
     Optional<String> tag;
     List<Task> subtasks;
-
-    private Task(TaskId id, String description) {
-        this.id = id;
-        this.description = description;
-        this.creationDate = LocalDateTime.now();
+    public Task(TaskId id, String description) {
+        this.id = Objects.requireNonNull(id);
+        this.description = Objects.requireNonNull(description);
+        this.creationDate = Objects.requireNonNull(LocalDateTime.now());
         this.dueDate = Optional.empty();
         this.closeDate = Optional.empty();
-        this.state = State.todo;
+        this.state = Objects.requireNonNull(State.todo);
         this.tag = Optional.empty();
         this.subtasks = List.of();
     }
 
-    private Task(TaskId id, String description, LocalDateTime dueDate) {
-        this.id = id;
-        this.description = description;
-        this.creationDate = LocalDateTime.now();
+    public Task(TaskId id, String description, LocalDateTime dueDate) {
+        this.id = Objects.requireNonNull(id);
+        this.description = Objects.requireNonNull(description);
+        this.creationDate = Objects.requireNonNull(LocalDateTime.now());
         this.dueDate = Optional.of(dueDate);
         this.closeDate = Optional.empty();
-        this.state = State.todo;
+        this.state = Objects.requireNonNull(State.todo);
         this.tag = Optional.empty();
         this.subtasks = List.of();
     }
+
 
     public TaskId getId() {
         return id;
@@ -70,31 +70,31 @@ public class Task {
     }
 
     public void updateDescription(String description) {
-        this.description = description;
+        this.description = Objects.requireNonNull(description);
     }
 
     public void updateDueDate(LocalDateTime dueDate) {
-        this.dueDate = Optional.of(dueDate);
+        this.dueDate = Objects.requireNonNull(Optional.of(dueDate));
     }
 
     public void updateCloseDate(LocalDateTime closeDate) {
-        this.closeDate = Optional.of(closeDate);
+        this.closeDate = Objects.requireNonNull(Optional.of(closeDate));
     }
 
     public void updateState(State state) {
-        this.state = state;
+        this.state = Objects.requireNonNull(state);
     }
 
     public void updateTag(String tag) {
-        this.tag = Optional.of(tag);
+        this.tag = Objects.requireNonNull(Optional.of(tag));
     }
 
     public void addSubtask(Task subtask) {
-        this.subtasks.add(subtask);
+        this.subtasks.add(Objects.requireNonNull(subtask));
     }
 
     public void removeSubtask(Task subtask) {
-        this.subtasks.remove(subtask);
+        this.subtasks.remove(Objects.requireNonNull(subtask));
     }
 
     @Override
