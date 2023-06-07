@@ -83,6 +83,9 @@ public class Task {
 
     public void updateState(State state) {
         this.state = Objects.requireNonNull(state);
+        if (state == State.done) {
+            updateCloseDate(LocalDateTime.now());
+        }
     }
 
     public void updateTag(String tag) {
