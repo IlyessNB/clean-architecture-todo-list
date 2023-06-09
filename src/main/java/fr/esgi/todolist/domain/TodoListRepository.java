@@ -1,9 +1,11 @@
 package fr.esgi.todolist.domain;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface TodoListRepository {
     void save(TodoList todoList);
 
-    TodoList get();
+    Optional<TodoList> get();
+
+    TaskId nextTaskId();
 }
