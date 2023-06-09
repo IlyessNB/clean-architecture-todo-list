@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import fr.esgi.todolist.domain.errors.TaskNotFoundException;
 import fr.esgi.todolist.infrastructure.JSONTaskIdDeserializer;
 import fr.esgi.todolist.infrastructure.JSONTaskIdSerializer;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -46,7 +48,7 @@ public class Task {
         this.closeDate = null;
         this.state = Objects.requireNonNull(TaskState.TODO);
         this.tag = null;
-        this.subtasks = List.of();
+        this.subtasks = new ArrayList<>();
     }
 
     public Task(TaskId id, String description, LocalDateTime dueDate) {
@@ -57,7 +59,7 @@ public class Task {
         this.closeDate = null;
         this.state = Objects.requireNonNull(TaskState.TODO);
         this.tag = null;
-        this.subtasks = List.of();
+        this.subtasks = new ArrayList<>();
     }
 
     public TaskId getId() {
@@ -121,6 +123,24 @@ public class Task {
 
     public void removeSubtask(Task subtask) {
         this.subtasks.remove(Objects.requireNonNull(subtask));
+    }
+
+
+    public Task updateSubtask(Task task) {
+        if (this.id.equals(task.id)) {
+            this.description = task.description;
+            this.dueDate = task.dueDate;
+            this.closeDate = task.closeDate;
+            this.state = task.state;
+            return this;
+        }
+        for (Task subtask : this.subtasks) {
+            Task current = subtask.updateSubtask(task);
+            if (current != null) {
+                return current;
+            }
+        }
+        return null;
     }
 
     @Override
