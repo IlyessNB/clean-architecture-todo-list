@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import fr.esgi.todolist.domain.Task;
 import fr.esgi.todolist.domain.TodoList;
 import fr.esgi.todolist.domain.TodoListDeserializer;
@@ -14,7 +16,9 @@ public class JSONTodoListDeserializer implements TodoListDeserializer {
     public TodoList deserialize(String jsonTask) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            List<Task> tasks = mapper.readValue(jsonTask, new TypeReference<List<Task>>() {
+            mapper.registerModule(new JavaTimeModule());
+            mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            List<Task> tasks = mapper.readValue(jsonTask, new TypeReference<>() {
             });
             var todoList = TodoList.of();
             todoList.setTasks(tasks);

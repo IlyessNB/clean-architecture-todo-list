@@ -1,27 +1,51 @@
 package fr.esgi.todolist.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import fr.esgi.todolist.infrastructure.JSONTaskIdDeserializer;
+import fr.esgi.todolist.infrastructure.JSONTaskIdSerializer;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 public class Task {
+    @JsonProperty("id")
+    @JsonSerialize(using = JSONTaskIdSerializer.class)
+    @JsonDeserialize(using = JSONTaskIdDeserializer.class)
     TaskId id;
+    @JsonProperty("description")
     String description;
+    @JsonProperty("creationDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     LocalDateTime creationDate;
-    Optional<LocalDateTime> dueDate;
-    Optional<LocalDateTime> closeDate;
-    State state;
-    Optional<String> tag;
+    @JsonProperty("dueDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    LocalDateTime dueDate;
+    @JsonProperty("closeDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    LocalDateTime closeDate;
+    @JsonProperty("state")
+    TaskState state;
+    @JsonProperty("tag")
+    String tag;
+    @JsonProperty("subtasks")
     List<Task> subtasks;
+
+    public Task() {
+    }
+
     public Task(TaskId id, String description) {
         this.id = Objects.requireNonNull(id);
         this.description = Objects.requireNonNull(description);
         this.creationDate = Objects.requireNonNull(LocalDateTime.now());
-        this.dueDate = Optional.empty();
-        this.closeDate = Optional.empty();
-        this.state = Objects.requireNonNull(State.todo);
-        this.tag = Optional.empty();
+        this.dueDate = null;
+        this.closeDate = null;
+        this.state = Objects.requireNonNull(TaskState.TODO);
+        this.tag = null;
         this.subtasks = List.of();
     }
 
@@ -29,13 +53,12 @@ public class Task {
         this.id = Objects.requireNonNull(id);
         this.description = Objects.requireNonNull(description);
         this.creationDate = Objects.requireNonNull(LocalDateTime.now());
-        this.dueDate = Optional.of(dueDate);
-        this.closeDate = Optional.empty();
-        this.state = Objects.requireNonNull(State.todo);
-        this.tag = Optional.empty();
+        this.dueDate = dueDate;
+        this.closeDate = null;
+        this.state = Objects.requireNonNull(TaskState.TODO);
+        this.tag = null;
         this.subtasks = List.of();
     }
-
 
     public TaskId getId() {
         return id;
@@ -50,19 +73,19 @@ public class Task {
     }
 
     public Optional<LocalDateTime> getDueDate() {
-        return dueDate;
+        return Optional.ofNullable(dueDate);
     }
 
     public Optional<LocalDateTime> getCloseDate() {
-        return closeDate;
+        return Optional.ofNullable(closeDate);
     }
 
-    public State getState() {
+    public TaskState getState() {
         return state;
     }
 
     public Optional<String> getTag() {
-        return tag;
+        return Optional.ofNullable(tag);
     }
 
     public List<Task> getSubtasks() {
@@ -74,22 +97,22 @@ public class Task {
     }
 
     public void updateDueDate(LocalDateTime dueDate) {
-        this.dueDate = Objects.requireNonNull(Optional.of(dueDate));
+        this.dueDate = Objects.requireNonNull(dueDate);
     }
 
     public void updateCloseDate(LocalDateTime closeDate) {
-        this.closeDate = Objects.requireNonNull(Optional.of(closeDate));
+        this.closeDate = Objects.requireNonNull(closeDate);
     }
 
-    public void updateState(State state) {
+    public void updateState(TaskState state) {
         this.state = Objects.requireNonNull(state);
-        if (state == State.done) {
+        if (state == TaskState.DONE) {
             updateCloseDate(LocalDateTime.now());
         }
     }
 
     public void updateTag(String tag) {
-        this.tag = Objects.requireNonNull(Optional.of(tag));
+        this.tag = Objects.requireNonNull(tag);
     }
 
     public void addSubtask(Task subtask) {
@@ -102,10 +125,15 @@ public class Task {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Task task = (Task) o;
-        return Objects.equals(id, task.id) && Objects.equals(description, task.description) && Objects.equals(creationDate, task.creationDate) && Objects.equals(dueDate, task.dueDate) && Objects.equals(closeDate, task.closeDate) && state == task.state && Objects.equals(tag, task.tag) && Objects.equals(subtasks, task.subtasks);
+        return Objects.equals(id, task.id) && Objects.equals(description, task.description)
+                && Objects.equals(creationDate, task.creationDate) && Objects.equals(dueDate, task.dueDate)
+                && Objects.equals(closeDate, task.closeDate) && state == task.state && Objects.equals(tag, task.tag)
+                && Objects.equals(subtasks, task.subtasks);
     }
 
     @Override
