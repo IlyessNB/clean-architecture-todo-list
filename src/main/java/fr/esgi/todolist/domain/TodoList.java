@@ -24,6 +24,13 @@ public class TodoList {
         this.tasks = tasks;
     }
 
+    public Task getTaskById(TaskId taskId) {
+        return tasks.stream()
+                .filter(task -> task.getId().equals(taskId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+    }
+
     public void addTask(Task task) {
         this.tasks.add(task);
     }
