@@ -1,3 +1,16 @@
-# Run the java program in this script
-javac -cp ./src/main/java ./src/main/java/fr/esgi/todolist/Main.java
-java -cp ./src/main/java fr.esgi.todolist.Main
+#!/bin/bash
+
+# Build the Maven project
+mvn clean install
+
+# Check if the build was successful
+if [ $? -ne 0 ]; then
+  echo "Build failed. Exiting..."
+  exit 1
+fi
+
+# Collect the arguments passed to the script
+arguments="$@"
+
+# Run the Maven application with arguments
+mvn exec:java -Dexec.mainClass="fr.esgi.todolist.Main" -Dexec.args="$arguments"
