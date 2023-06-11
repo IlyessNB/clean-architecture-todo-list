@@ -22,8 +22,12 @@ public class UpdateTask implements Command {
                 ? (LocalDateTime) attributes.get("dueDate")
                 : null;
         this.state = attributes.containsKey("state")
-                ? (TaskState) attributes.get("state")
+                ? TaskState.valueOf(attributes.get("state").toString())
                 : null;
     }
 
+    @Override
+    public String toString() {
+        return String.format("update id=%s description=%s dueDate=%s state=%s", taskId, description, dueDate, state);
+    }
 }

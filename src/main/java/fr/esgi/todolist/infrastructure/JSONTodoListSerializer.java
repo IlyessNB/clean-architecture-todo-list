@@ -15,7 +15,7 @@ public class JSONTodoListSerializer implements TodoListSerializer {
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         try {
-            return objectMapper.writeValueAsString(todoList);
+            return objectMapper.writeValueAsString(todoList.getTasks());
         } catch (Exception e) {
             throw new TodoListDeserializerException(e.getMessage());
         }

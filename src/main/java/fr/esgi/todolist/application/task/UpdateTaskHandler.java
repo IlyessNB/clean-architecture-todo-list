@@ -7,7 +7,7 @@ import fr.esgi.todolist.domain.TodoListRepository;
 import fr.esgi.todolist.kernel.command.CommandHandler;
 
 public class UpdateTaskHandler implements CommandHandler<UpdateTask, Task> {
-    final private TodoListRepository todoListRepository;
+    private final TodoListRepository todoListRepository;
 
     public UpdateTaskHandler(TodoListRepository todoListRepository) {
         this.todoListRepository = todoListRepository;
@@ -24,7 +24,7 @@ public class UpdateTaskHandler implements CommandHandler<UpdateTask, Task> {
         );
         task.updateDueDate(udpateTask.dueDate != null
                 ? udpateTask.dueDate
-                : task.getDueDate().get()
+                : task.getDueDate()
         );
         task.updateState(udpateTask.state != null
                 ? udpateTask.state

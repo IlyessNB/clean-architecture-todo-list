@@ -17,6 +17,7 @@ public class AddTask implements Command {
     public final TaskState state;
     public final String tag;
     public final List<Task> subtasks;
+    public final String parentTaskId;
 
     public AddTask(Map<String, Object> attributes) {
         this.description = Objects.requireNonNull(attributes.get("description")).toString();
@@ -28,5 +29,13 @@ public class AddTask implements Command {
         this.state = Objects.requireNonNull(TaskState.TODO);
         this.tag = null;
         this.subtasks = List.of();
+        this.parentTaskId = attributes.containsKey("parentId")
+                ? attributes.get("parentId").toString()
+                : null;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("add description=%s dueDate=%s parentId=%s", description, dueDate, parentTaskId);
     }
 }

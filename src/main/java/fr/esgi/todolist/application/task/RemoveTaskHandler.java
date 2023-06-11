@@ -7,7 +7,7 @@ import fr.esgi.todolist.domain.TodoListRepository;
 import fr.esgi.todolist.kernel.command.CommandHandler;
 
 public class RemoveTaskHandler implements CommandHandler<RemoveTask, Task> {
-    final private TodoListRepository todoListRepository;
+    private final TodoListRepository todoListRepository;
 
     public RemoveTaskHandler(TodoListRepository todoListRepository) {
         this.todoListRepository = todoListRepository;
@@ -19,6 +19,7 @@ public class RemoveTaskHandler implements CommandHandler<RemoveTask, Task> {
         TodoList todoList = todoListRepository.get().orElse(TodoList.of());
         Task task = todoList.getTaskById(taskId);
         todoList.removeTask(task);
+        todoListRepository.save(todoList);
         return task;
     }
 }

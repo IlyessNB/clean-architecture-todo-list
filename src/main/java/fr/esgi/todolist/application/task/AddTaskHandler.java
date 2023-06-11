@@ -7,7 +7,7 @@ import fr.esgi.todolist.domain.TodoListRepository;
 import fr.esgi.todolist.kernel.command.CommandHandler;
 
 public class AddTaskHandler implements CommandHandler<AddTask, Task> {
-    final private TodoListRepository todoListRepository;
+    private final TodoListRepository todoListRepository;
 
     public AddTaskHandler(TodoListRepository todoListRepository) {
         this.todoListRepository = todoListRepository;
@@ -20,7 +20,15 @@ public class AddTaskHandler implements CommandHandler<AddTask, Task> {
                 ? new Task(taskId, command.description, command.dueDate)
                 : new Task(taskId, command.description);
         TodoList todoList = todoListRepository.get().orElse(TodoList.of());
-        todoList.addTask(task);
+
+        if (command.parentTaskId != null) {
+            Task parentTask = todoList.getTaskById(new TaskId(command.parentTaskId));
+            parentTask.addSubtask(task);
+            todoList.updateTask(parentTask);
+        } else {
+            todoList.addTask(task);
+        }
+
         todoListRepository.save(todoList);
         return task;
     }

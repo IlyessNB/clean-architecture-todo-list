@@ -8,8 +8,6 @@ import fr.esgi.todolist.infrastructure.JSONTodoListDeserializer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 class JSONTaskDeserializerTest {
 
     @Test
@@ -24,10 +22,10 @@ class JSONTaskDeserializerTest {
         Assertions.assertEquals(new TaskId("1"), task.getId());
         Assertions.assertEquals("title", task.getDescription());
         Assertions.assertEquals("2021-01-01T00:00", task.getCreationDate().toString());
-        Assertions.assertEquals("2021-01-01T00:00", task.getDueDate().get().toString());
-        Assertions.assertEquals("2021-01-01T00:00", task.getCloseDate().get().toString());
+        Assertions.assertEquals("2021-01-01T00:00", task.getDueDate().toString());
+        Assertions.assertEquals("2021-01-01T00:00", task.getCloseDate().toString());
         Assertions.assertEquals("TODO", task.getState().toString());
-        Assertions.assertEquals(Optional.of("tag"), task.getTag());
+        Assertions.assertEquals("tag", task.getTag());
         Assertions.assertEquals(1, task.getSubtasks().size());
         Task subtask = task.getSubtasks().get(0);
         Assertions.assertEquals(new TaskId("2"), subtask.getId());

@@ -1,6 +1,8 @@
 package fr.esgi.todolist.kernel.command;
 
-public interface CommandHandler<C extends Command, R> {
+import fr.esgi.todolist.kernel.UserActionHandler;
+
+public interface CommandHandler<C extends Command, R> extends UserActionHandler<C, R> {
     R handle(C command);
 }
 

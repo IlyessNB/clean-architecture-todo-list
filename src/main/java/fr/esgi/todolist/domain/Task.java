@@ -2,22 +2,14 @@ package fr.esgi.todolist.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import fr.esgi.todolist.domain.errors.TaskNotFoundException;
-import fr.esgi.todolist.infrastructure.JSONTaskIdDeserializer;
-import fr.esgi.todolist.infrastructure.JSONTaskIdSerializer;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Task {
     @JsonProperty("id")
-    @JsonSerialize(using = JSONTaskIdSerializer.class)
-    @JsonDeserialize(using = JSONTaskIdDeserializer.class)
     TaskId id;
     @JsonProperty("description")
     String description;
@@ -74,20 +66,21 @@ public class Task {
         return creationDate;
     }
 
-    public Optional<LocalDateTime> getDueDate() {
-        return Optional.ofNullable(dueDate);
+    public LocalDateTime getDueDate() {
+        return dueDate;
     }
 
-    public Optional<LocalDateTime> getCloseDate() {
-        return Optional.ofNullable(closeDate);
+    public LocalDateTime getCloseDate() {
+        return closeDate;
     }
+
 
     public TaskState getState() {
         return state;
     }
 
-    public Optional<String> getTag() {
-        return Optional.ofNullable(tag);
+    public String getTag() {
+        return tag;
     }
 
     public List<Task> getSubtasks() {
@@ -121,8 +114,19 @@ public class Task {
         this.subtasks.add(Objects.requireNonNull(subtask));
     }
 
-    public void removeSubtask(Task subtask) {
-        this.subtasks.remove(Objects.requireNonNull(subtask));
+    public Task removeSubtask(Task subtask) {
+        if (this.subtasks.contains(subtask)) {
+            this.subtasks.remove(subtask);
+            return subtask;
+        } else {
+            for (Task task : this.subtasks) {
+                Task current = task.removeSubtask(subtask);
+                if (current != null) {
+                    return current;
+                }
+            }
+            return null;
+        }
     }
 
 
@@ -173,5 +177,18 @@ public class Task {
                 ", tag=" + tag +
                 ", subtasks=" + subtasks +
                 '}';
+    }
+
+    public Task getSubtaskById(TaskId taskId) {
+        if (this.id.equals(taskId)) {
+            return this;
+        }
+        for (Task subtask : this.subtasks) {
+            Task current = subtask.getSubtaskById(taskId);
+            if (current != null) {
+                return current;
+            }
+        }
+        return null;
     }
 }

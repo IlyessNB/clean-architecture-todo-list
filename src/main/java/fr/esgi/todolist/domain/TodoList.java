@@ -25,10 +25,17 @@ public class TodoList {
     }
 
     public Task getTaskById(TaskId taskId) {
-        return tasks.stream()
-                .filter(task -> task.getId().equals(taskId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+        for (Task task : this.tasks) {
+            if (task.getId().equals(taskId)) {
+                return task;
+            } else {
+                Task subtask = task.getSubtaskById(taskId);
+                if (subtask != null) {
+                    return subtask;
+                }
+            }
+        }
+        throw new TaskNotFoundException("Task with id " + taskId + " not found");
     }
 
     public void addTask(Task task) {
@@ -47,11 +54,21 @@ public class TodoList {
                 }
             }
         }
-
         throw new TaskNotFoundException("Task not found");
     }
 
-    public void removeTask(Task task) {
-        this.tasks.remove(task);
+    public Task removeTask(Task taskToRemove) {
+        for (Task task : this.tasks) {
+            if (task.getId().equals(taskToRemove.getId())) {
+                this.tasks.remove(task);
+                return task;
+            } else {
+                Task subtask = task.removeSubtask(taskToRemove);
+                if (subtask != null) {
+                    return subtask;
+                }
+            }
+        }
+        throw new TaskNotFoundException("Task not found");
     }
 }

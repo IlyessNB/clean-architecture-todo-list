@@ -9,4 +9,9 @@ public class RemoveTask implements Command {
     public RemoveTask(TaskId taskId) {
         this.taskId = taskId;
     }
+
+    @Override
+    public String toString() {
+        return String.format("remove id=%s", taskId);
+    }
 }

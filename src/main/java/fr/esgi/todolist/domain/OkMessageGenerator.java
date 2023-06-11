@@ -1,5 +1,5 @@
 package fr.esgi.todolist.domain;
 
-public interface LogBuilder {
+public interface OkMessageGenerator {
     String createLog(String log);
 }

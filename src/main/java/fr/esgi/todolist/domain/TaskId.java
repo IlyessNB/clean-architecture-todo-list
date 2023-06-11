@@ -1,8 +1,9 @@
 package fr.esgi.todolist.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public record TaskId(String value) implements ValueObjectID {
+public record TaskId(String value) implements ValueObjectID, Serializable {
     public String getValue() {
         return value;
     }
@@ -22,8 +23,6 @@ public record TaskId(String value) implements ValueObjectID {
 
     @Override
     public String toString() {
-        return "TaskId{" +
-                "value='" + value + '\'' +
-                '}';
+        return value;
     }
 }

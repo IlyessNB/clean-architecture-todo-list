@@ -8,10 +8,10 @@ import fr.esgi.todolist.kernel.query.QueryHandler;
 import java.util.List;
 import java.util.Optional;
 
-public class GetTaskstHandler implements QueryHandler<GetTasks, List<Task>> {
+public class GetTasksHandler implements QueryHandler<GetTasks, List<Task>> {
     private final TodoListRepository todoListRepository;
 
-    public GetTaskstHandler(TodoListRepository todoListRepository) {
+    public GetTasksHandler(TodoListRepository todoListRepository) {
         this.todoListRepository = todoListRepository;
     }
 
