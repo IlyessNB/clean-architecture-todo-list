@@ -11,18 +11,22 @@ public class TodoListFileHandler {
     private final OkMessageGenerator okMessageGenerator;
     private final ErrorMessageGenerator errorMessageGenerator;
     private final FileWriter fileWriter;
+    private final Printer printer;
 
     public TodoListFileHandler(
             UserActionReader commandLine,
             Map<Class<? extends UserAction>, UserActionHandler> userActionHandlerMap,
             OkMessageGenerator okMessageGenerator,
             ErrorMessageGenerator errorMessageGenerator,
-            FileWriter fileWriter) {
+            FileWriter fileWriter,
+            Printer printer
+    ) {
         this.commandLine = commandLine;
         this.userActionHandlerMap = userActionHandlerMap;
         this.okMessageGenerator = okMessageGenerator;
         this.errorMessageGenerator = errorMessageGenerator;
         this.fileWriter = fileWriter;
+        this.printer = printer;
     }
 
     public void handle(String[] args) {
@@ -31,7 +35,8 @@ public class TodoListFileHandler {
         UserActionHandler userActionHandler = userActionHandlerMap.get(userAction.getClass());
         var log = "";
         try {
-            userActionHandler.handle(userAction);
+            var result = userActionHandler.handle(userAction);
+            this.printer.print("Result: " + result.toString());
             log = okMessageGenerator.createLog(userAction.toString());
         } catch (Exception e) {
             System.out.println("Sorry, an error occurred: " + e.getMessage());

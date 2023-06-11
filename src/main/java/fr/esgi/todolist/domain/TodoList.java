@@ -71,4 +71,38 @@ public class TodoList {
         }
         throw new TaskNotFoundException("Task not found");
     }
+
+@Override
+    public String toString() {
+        // JSON Beautifier on list of tasks
+        return "{\n" +
+                "  \"tasks\": [\n" +
+                "    {\n" +
+                "      \"id\": \"1\",\n" +
+                "      \"title\": \"Task 1\",\n" +
+                "      \"description\": \"Description of task 1\",\n" +
+                "      \"subtasks\": [\n" +
+                "        {\n" +
+                "          \"id\": \"1\",\n" +
+                "          \"title\": \"Subtask 1\",\n" +
+                "          \"description\": \"Description of subtask 1\",\n" +
+                "          \"subtasks\": []\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"id\": \"2\",\n" +
+                "          \"title\": \"Subtask 2\",\n" +
+                "          \"description\": \"Description of subtask 2\",\n" +
+                "          \"subtasks\": []\n" +
+                "        }\n" +
+                "      ]\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"id\": \"2\",\n" +
+                "      \"title\": \"Task 2\",\n" +
+                "      \"description\": \"Description of task 2\",\n" +
+                "      \"subtasks\": []\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
+    }
 }

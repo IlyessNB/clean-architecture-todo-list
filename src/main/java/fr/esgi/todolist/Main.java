@@ -27,8 +27,9 @@ public class Main {
 
         OkMessageGenerator okMessageGenerator = new LogOkMessageGenerator();
         ErrorMessageGenerator errorMessageGenerator = new LogErrorMessageGenerator();
+        Printer printer = new SystemPrinter();
 
-        TodoListFileHandler todoListFileHandler = new TodoListFileHandler(commandLine, userActionHandlerMap, okMessageGenerator, errorMessageGenerator, fileWriter);
+        TodoListFileHandler todoListFileHandler = new TodoListFileHandler(commandLine, userActionHandlerMap, okMessageGenerator, errorMessageGenerator, fileWriter, printer);
         todoListFileHandler.handle(args);
     }
 }

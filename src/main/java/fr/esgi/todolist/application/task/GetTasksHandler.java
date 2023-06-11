@@ -8,7 +8,7 @@ import fr.esgi.todolist.kernel.query.QueryHandler;
 import java.util.List;
 import java.util.Optional;
 
-public class GetTasksHandler implements QueryHandler<GetTasks, List<Task>> {
+public class GetTasksHandler implements QueryHandler<GetTasks, TodoList> {
     private final TodoListRepository todoListRepository;
 
     public GetTasksHandler(TodoListRepository todoListRepository) {
@@ -16,9 +16,8 @@ public class GetTasksHandler implements QueryHandler<GetTasks, List<Task>> {
     }
 
     @Override
-    public List<Task> handle(GetTasks query) {
+    public TodoList handle(GetTasks query) {
         final Optional<TodoList> getTodoList = todoListRepository.get();
-        TodoList todoList = getTodoList.orElse(TodoList.of());
-        return todoList.getTasks();
+        return getTodoList.orElse(TodoList.of());
     }
 }
