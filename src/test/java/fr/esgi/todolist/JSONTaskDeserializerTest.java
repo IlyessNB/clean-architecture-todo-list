@@ -14,7 +14,8 @@ class JSONTaskDeserializerTest {
     void test_deserialize_should_return_a_todo_list() {
         TodoListDeserializer todoListDeserializer = new JSONTodoListDeserializer();
 
-        String jsonTodoList = "[{\"id\":1,\"description\":\"title\",\"creationDate\":\"2021-01-01T00:00:00\",\"dueDate\":\"2021-01-01T00:00:00\",\"closeDate\":\"2021-01-01T00:00:00\",\"state\":\"TODO\",\"tag\":\"tag\",\"subtasks\":[{\"id\":2,\"description\":\"title\",\"creationDate\":\"2021-01-01T00:00:00\",\"dueDate\":\"2021-01-01T00:00:00\",\"closeDate\":\"2021-01-01T00:00:00\",\"state\":\"TODO\",\"tag\":\"tag\",\"subtasks\":[]}]}]";
+        String jsonTodoList = "[{\"id\":{\"value\": \"1\"},\"description\":\"title\",\"creationDate\":\"2021-01-01T00:00:00\",\"dueDate\":\"2021-01-01T00:00:00\",\"closeDate\":\"2021-01-01T00:00:00\",\"state\":\"TODO\",\"tag\":\"tag\",\"subtasks\":[{\"id\":{\"value\": \"2\"},\"description\":\"title\",\"creationDate\":\"2021-01-01T00:00:00\",\"dueDate\":\"2021-01-01T00:00:00\",\"closeDate\":\"2021-01-01T00:00:00\",\"state\":\"TODO\",\"tag\":\"tag\",\"subtasks\":[]}]}]";
+
         TodoList todoList = todoListDeserializer.deserialize(jsonTodoList);
 
         Assertions.assertEquals(1, todoList.getTasks().size());

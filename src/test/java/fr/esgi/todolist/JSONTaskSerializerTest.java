@@ -22,6 +22,6 @@ class JSONTaskSerializerTest {
         String serializedTodoList = todoListSerializer.serialize(todoList);
         // Ignore creationDate field because it's now date
         serializedTodoList = serializedTodoList.replaceAll("\"creationDate\":\"[^\"]+\"", "\"creationDate\":\"2021-01-01T00:00:00\"");
-        Assertions.assertEquals("[{\"id\":\"TaskId{value='1'}\",\"description\":\"First task\",\"creationDate\":\"2021-01-01T00:00:00\",\"dueDate\":null,\"closeDate\":null,\"state\":\"TODO\",\"tag\":null,\"subtasks\":[]},{\"id\":\"TaskId{value='2'}\",\"description\":\"Second task\",\"creationDate\":\"2021-01-01T00:00:00\",\"dueDate\":\"2020-12-25T12:00:00\",\"closeDate\":null,\"state\":\"TODO\",\"tag\":null,\"subtasks\":[]}]", serializedTodoList);
+        Assertions.assertEquals("[{\"id\":{\"value\":\"1\"},\"description\":\"First task\",\"creationDate\":\"2021-01-01T00:00:00\",\"dueDate\":null,\"closeDate\":null,\"state\":\"TODO\",\"tag\":null,\"subtasks\":[]},{\"id\":{\"value\":\"2\"},\"description\":\"Second task\",\"creationDate\":\"2021-01-01T00:00:00\",\"dueDate\":\"2020-12-25T12:00:00\",\"closeDate\":null,\"state\":\"TODO\",\"tag\":null,\"subtasks\":[]}]", serializedTodoList);
     }
 }
