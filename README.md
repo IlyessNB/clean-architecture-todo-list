@@ -15,6 +15,8 @@ Options :
 - `-d` due date
 - `-s` status
 - `-p` parent task id
+3. You can find your tasks in the file `$HOME/consoleagenda/data.json`
+4. You can find your logs in the file `$HOME/consoleagenda/logs.txt`
 
 
 ## How to test this app
