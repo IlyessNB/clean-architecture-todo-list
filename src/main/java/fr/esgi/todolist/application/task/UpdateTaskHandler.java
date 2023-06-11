@@ -24,7 +24,7 @@ public class UpdateTaskHandler implements CommandHandler<UpdateTask, Task> {
         );
         task.updateDueDate(udpateTask.dueDate != null
                 ? udpateTask.dueDate
-                : task.getDueDate()
+                : task.getDueDate().get()
         );
         task.updateState(udpateTask.state != null
                 ? udpateTask.state
