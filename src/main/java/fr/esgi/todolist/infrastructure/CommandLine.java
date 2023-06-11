@@ -6,6 +6,7 @@ import fr.esgi.todolist.application.task.RemoveTask;
 import fr.esgi.todolist.application.task.UpdateTask;
 import fr.esgi.todolist.domain.TaskId;
 import fr.esgi.todolist.domain.UserAction;
+import fr.esgi.todolist.domain.UserActionReader;
 import fr.esgi.todolist.domain.errors.UserActionException;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommandLine {
+public class CommandLine implements UserActionReader {
 
     public UserAction parse(String[] userActionInCommandLine) {
         String typeOfUserAction = userActionInCommandLine[0];

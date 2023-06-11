@@ -6,14 +6,14 @@ import fr.esgi.todolist.kernel.UserActionHandler;
 import java.util.Map;
 
 public class TodoListFileHandler {
-    private final CommandLine commandLine;
+    private final UserActionReader commandLine;
     private final Map<Class<? extends UserAction>, UserActionHandler> userActionHandlerMap;
     private final OkMessageGenerator okMessageGenerator;
     private final ErrorMessageGenerator errorMessageGenerator;
     private final FileWriter fileWriter;
 
     public TodoListFileHandler(
-            CommandLine commandLine,
+            UserActionReader commandLine,
             Map<Class<? extends UserAction>, UserActionHandler> userActionHandlerMap,
             OkMessageGenerator okMessageGenerator,
             ErrorMessageGenerator errorMessageGenerator,

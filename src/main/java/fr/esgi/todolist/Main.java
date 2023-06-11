@@ -15,7 +15,7 @@ public class Main {
         TodoListDeserializer todoListDeserializer = new JSONTodoListDeserializer();
 
         TodoListRepository todoListRepository = new TodoListFileRepository(fileReader, fileWriter, todoListSerializer, todoListDeserializer);
-        CommandLine commandLine = new CommandLine();
+        UserActionReader commandLine = new CommandLine();
 
         final Map<Class<? extends UserAction>, UserActionHandler> userActionHandlerMap =
                 Map.of(
