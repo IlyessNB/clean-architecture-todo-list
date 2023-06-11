@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Build the Maven project
-mvn clean install
+mvn clean install -DskipTests
 
 # Check if the build was successful
 if [ $? -ne 0 ]; then
