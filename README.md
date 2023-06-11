@@ -24,3 +24,49 @@ Options :
 
 ## Design decisions
 
+### Architecture
+    - Domain :
+    - Infrastructure :
+    - Kernel : 
+    - Application :
+
+### Domain:
+#### Interface:
+    - Input:
+        - UserAction
+    - Traitement: 
+        - FileReader
+        - TodoListDeserializer
+        - FileWriter
+        - TodoListSerializer
+    - Output:
+        - TodoListRepository
+        - ErrorMessageGenerator
+        - OkMessageGenerator
+#### Class:
+    - Task
+    - TodoList : Liste de task
+
+### Infrastructure:
+    - Input :
+        - CommandLine
+    - Traitement :
+        - JavaIoFileReader
+        - JavaIoFileWriter
+        - JSONTodoListDeserializer
+        - JSONTodoListSerializer
+        - TodoListFileHandler
+    - Output :
+        - TodoListFileRepository
+        - LogOkMessageGenerator
+        - LogErrorMessageGenerator
+    
+### Kernel:
+    - Command Interface
+    - Query Interface
+
+### Application:
+    - Commands : Add, Update, Remove
+    - CommandHandlers
+    - Query : List
+    - QueryHandler
